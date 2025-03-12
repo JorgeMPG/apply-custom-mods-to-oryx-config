@@ -5,3 +5,7 @@ ORYX_ENABLE = yes
 RGB_MATRIX_CUSTOM_KB = yes
 SPACE_CADET_ENABLE = no
 CAPS_WORD_ENABLE = yes
+
+
+# Customizations outside of Oryx
+REPEAT_KEY_ENABLE = yes
