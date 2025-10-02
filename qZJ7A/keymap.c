@@ -46,9 +46,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [3] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_MS_WH_RIGHT, KC_MS_WH_UP,    KC_MS_WH_DOWN,  KC_MS_WH_RIGHT,                                 KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_MS_ACCEL2,   KC_PAGE_UP,     KC_MS_LEFT,     KC_MS_UP,       KC_MS_DOWN,     KC_MS_RIGHT,                                    KC_BSPC,        OSM(MOD_RALT),  OSM(MOD_RCTL),  KC_TAB,         KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_MS_ACCEL1,   KC_PGDN,        KC_LEFT,        KC_UP,          KC_DOWN,        KC_RIGHT,                                       KC_ESCAPE,      OSM(MOD_RSFT),  OSM(MOD_RGUI),  KC_ENTER,       KC_GRAVE,       KC_TRANSPARENT, 
-    KC_MS_ACCEL0,   KC_HOME,        KC_MS_BTN2,     KC_MS_BTN3,     KC_MS_BTN1,     KC_END,                                         KC_DELETE,      KC_BSLS,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_MS_ACCEL2,   KC_HOME,        KC_MS_BTN2,     KC_MS_BTN3,     KC_MS_BTN1,     KC_END,                                         KC_BSPC,        OSM(MOD_RALT),  OSM(MOD_RCTL),  KC_TAB,         KC_TRANSPARENT, KC_TRANSPARENT, 
+    KC_MS_ACCEL1,   KC_PAGE_UP,     KC_LEFT,        KC_UP,          KC_DOWN,        KC_RIGHT,                                       KC_ESCAPE,      OSM(MOD_RSFT),  OSM(MOD_RGUI),  KC_ENTER,       KC_GRAVE,       KC_TRANSPARENT, 
+    KC_MS_ACCEL0,   KC_PGDN,        KC_MS_LEFT,     KC_MS_UP,       KC_MS_DOWN,     KC_MS_RIGHT,                                    KC_DELETE,      KC_BSLS,        KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, 
                                                     TO(0),          KC_NO,                                          KC_NO,          TO(0)
   ),
   [4] = LAYOUT_voyager(
@@ -67,9 +67,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
   [6] = LAYOUT_voyager(
     KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT,                                 KC_MS_WH_LEFT,  KC_MS_WH_DOWN,  KC_MS_WH_UP,    KC_MS_WH_RIGHT, KC_TRANSPARENT, KC_TRANSPARENT, 
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TAB,         OSM(MOD_LCTL),  OSM(MOD_LALT),  KC_BSPC,                                        KC_MS_LEFT,     KC_MS_DOWN,     KC_MS_UP,       KC_MS_RIGHT,    KC_PAGE_UP,     KC_MS_ACCEL2,   
-    KC_TRANSPARENT, KC_GRAVE,       KC_ENTER,       OSM(MOD_LGUI),  OSM(MOD_LSFT),  KC_ESCAPE,                                      KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_PGDN,        KC_MS_ACCEL1,   
-    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_BSLS,        KC_DELETE,                                      KC_HOME,        KC_MS_BTN1,     KC_MS_BTN3,     KC_MS_BTN2,     KC_END,         KC_MS_ACCEL0,   
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TAB,         OSM(MOD_LCTL),  OSM(MOD_LALT),  KC_BSPC,                                        KC_HOME,        KC_MS_BTN1,     KC_MS_BTN3,     KC_MS_BTN2,     KC_END,         KC_MS_ACCEL2,   
+    KC_TRANSPARENT, KC_GRAVE,       KC_ENTER,       OSM(MOD_LGUI),  OSM(MOD_LSFT),  KC_ESCAPE,                                      KC_LEFT,        KC_DOWN,        KC_UP,          KC_RIGHT,       KC_PAGE_UP,     KC_MS_ACCEL1,   
+    KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_TRANSPARENT, KC_BSLS,        KC_DELETE,                                      KC_MS_LEFT,     KC_MS_DOWN,     KC_MS_UP,       KC_MS_RIGHT,    KC_PGDN,        KC_MS_ACCEL0,   
                                                     TO(0),          KC_NO,                                          KC_NO,          TO(0)
   ),
   [7] = LAYOUT_voyager(
@@ -103,6 +103,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 extern bool set_scrolling;
 extern bool navigator_turbo;
 extern bool navigator_aim;
+void pointing_device_init_user(void) {
+    set_auto_mouse_enable(true);
+}
+bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
+  switch (keycode) {
+    case NAVIGATOR_INC_CPI ... NAVIGATOR_AIM:
+    case DRAG_SCROLL:
+    case TOGGLE_SCROLL:
+      return true;
+  }
+  return is_mouse_record_user(keycode, record);
+}
 
 
 
